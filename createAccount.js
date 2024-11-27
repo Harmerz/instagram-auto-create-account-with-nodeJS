@@ -104,17 +104,20 @@ function getRandomInt(min, max) {
             targetUrl
         );
         console.log("Page redirected to:", targetUrl);
+        // Save account info to JSON file
+        appendToJsonFile({
+            email: fakeMail,
+            name: name,
+            username: username,
+            password: randomPassword
+        }, 'accounts.json');
     } catch (error) {
-        console.error("Page did not redirect to the target URL within the timeout.");
+      console.error("Page did not redirect to the target URL within the timeout.");
+       // Extract the text content of the entire page
+      const pageText = await page.evaluate(() => document.body.textContent);
+      console.log("Page Text:\n", pageText.trim());
     }
 
-    // Save account info to JSON file
-    appendToJsonFile({
-        email: fakeMail,
-        name: name,
-        username: username,
-        password: randomPassword
-    }, 'accounts.json');
 
   } catch (e) {
     console.error(e);
